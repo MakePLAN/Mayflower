@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "DKqzb5X3wOASEcn0t3cE/4UD30+CtLTdFSW9xOK/XbacyVCBeUNS8w18GPnQCUsd37SMHhoRKFBMihJLkQK5yg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ble24\\Documents\\Projects\\junction2022\\Mayflower\\Mayflower.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ble24\\.nuget\\packages\\azuremapscontrol.components\\1.12.0\\azuremapscontrol.components.1.12.0.nupkg.sha512",
+    "C:\\Users\\ble24\\.nuget\\packages\\darnton.blazor.deviceinterop\\0.1.2\\darnton.blazor.deviceinterop.0.1.2.nupkg.sha512",
+    "C:\\Users\\ble24\\.nuget\\packages\\microsoft.identity.client\\4.46.1\\microsoft.identity.client.4.46.1.nupkg.sha512",
+    "C:\\Users\\ble24\\.nuget\\packages\\microsoft.identitymodel.abstractions\\6.18.0\\microsoft.identitymodel.abstractions.6.18.0.nupkg.sha512"
+  ],
+  "logs": []
+}

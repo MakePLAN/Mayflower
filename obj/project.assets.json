@@ -1,0 +1,228 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "AzureMapsControl.Components/1.12.0": {
+        "type": "package",
+        "build": {
+          "buildTransitive/AzureMapsControl.Components.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/AzureMapsControl.Components.props": {}
+        }
+      },
+      "Darnton.Blazor.DeviceInterop/0.1.2": {
+        "type": "package",
+        "build": {
+          "buildTransitive/Darnton.Blazor.DeviceInterop.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Darnton.Blazor.DeviceInterop.props": {}
+        }
+      },
+      "Microsoft.Identity.Client/4.46.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.IdentityModel.Abstractions": "6.18.0"
+        },
+        "compile": {
+          "lib/netcoreapp2.1/Microsoft.Identity.Client.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/Microsoft.Identity.Client.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Abstractions/6.18.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Microsoft.IdentityModel.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.IdentityModel.Abstractions.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AzureMapsControl.Components/1.12.0": {
+      "sha512": "zBTu/1jZgo4mHadfn68ZdAeNOd/oEtfuhBRTKdGPn9rYNPDXVrSP3ZmsW+xi6j9LJiOnGYK/h3bgtfwEjxwTFg==",
+      "type": "package",
+      "path": "azuremapscontrol.components/1.12.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "azuremapscontrol.components.1.12.0.nupkg.sha512",
+        "azuremapscontrol.components.nuspec",
+        "build/AzureMapsControl.Components.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/AzureMapsControl.Components.props",
+        "buildTransitive/AzureMapsControl.Components.props",
+        "lib/net5.0/AzureMapsControl.Components.dll",
+        "lib/net6.0/AzureMapsControl.Components.dll",
+        "staticwebassets/azure-maps-control.js",
+        "staticwebassets/azure-maps-control.min.js"
+      ]
+    },
+    "Darnton.Blazor.DeviceInterop/0.1.2": {
+      "sha512": "fR2+g0fIelyMBljNrrDMP3gXJCxjbLHT1WeFpkfIk9Ea1/Qd+RB8/mB+CnOI7vbfsYiiUi0ZbcUqszdT+Xpe0Q==",
+      "type": "package",
+      "path": "darnton.blazor.deviceinterop/0.1.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Darnton.Blazor.DeviceInterop.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/Darnton.Blazor.DeviceInterop.props",
+        "buildTransitive/Darnton.Blazor.DeviceInterop.props",
+        "darnton.blazor.deviceinterop.0.1.2.nupkg.sha512",
+        "darnton.blazor.deviceinterop.nuspec",
+        "lib/net5.0/Darnton.Blazor.DeviceInterop.dll",
+        "lib/net5.0/Darnton.Blazor.DeviceInterop.xml",
+        "staticwebassets/js/Geolocation.js"
+      ]
+    },
+    "Microsoft.Identity.Client/4.46.1": {
+      "sha512": "2FW/3S5tDBnOa7jlZLYD270z8M87wTxTzs1Xm2ALCXBvWR4q7WHxpDUQY1EExRwukrdqiS0Tb7HI0LfmAdEONw==",
+      "type": "package",
+      "path": "microsoft.identity.client/4.46.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/monoandroid10.0/Microsoft.Identity.Client.dll",
+        "lib/monoandroid10.0/Microsoft.Identity.Client.xml",
+        "lib/monoandroid90/Microsoft.Identity.Client.dll",
+        "lib/monoandroid90/Microsoft.Identity.Client.xml",
+        "lib/net45/Microsoft.Identity.Client.dll",
+        "lib/net45/Microsoft.Identity.Client.xml",
+        "lib/net461/Microsoft.Identity.Client.dll",
+        "lib/net461/Microsoft.Identity.Client.xml",
+        "lib/net5.0-windows10.0.17763/Microsoft.Identity.Client.dll",
+        "lib/net5.0-windows10.0.17763/Microsoft.Identity.Client.xml",
+        "lib/netcoreapp2.1/Microsoft.Identity.Client.dll",
+        "lib/netcoreapp2.1/Microsoft.Identity.Client.xml",
+        "lib/netstandard2.0/Microsoft.Identity.Client.dll",
+        "lib/netstandard2.0/Microsoft.Identity.Client.xml",
+        "lib/uap10.0.17763/Microsoft.Identity.Client.dll",
+        "lib/uap10.0.17763/Microsoft.Identity.Client.pri",
+        "lib/uap10.0.17763/Microsoft.Identity.Client.xml",
+        "lib/xamarinios10/Microsoft.Identity.Client.dll",
+        "lib/xamarinios10/Microsoft.Identity.Client.xml",
+        "lib/xamarinmac20/Microsoft.Identity.Client.dll",
+        "lib/xamarinmac20/Microsoft.Identity.Client.xml",
+        "microsoft.identity.client.4.46.1.nupkg.sha512",
+        "microsoft.identity.client.nuspec"
+      ]
+    },
+    "Microsoft.IdentityModel.Abstractions/6.18.0": {
+      "sha512": "ItCO09JoIQr9sY0AumHRLJKToMKM4/jFcBsg3uhKBZZLX1KPxjed/mKrQzo9PXiarfC87rguvFWWg9C996sEqA==",
+      "type": "package",
+      "path": "microsoft.identitymodel.abstractions/6.18.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Microsoft.IdentityModel.Abstractions.dll",
+        "lib/net45/Microsoft.IdentityModel.Abstractions.xml",
+        "lib/net461/Microsoft.IdentityModel.Abstractions.dll",
+        "lib/net461/Microsoft.IdentityModel.Abstractions.xml",
+        "lib/net472/Microsoft.IdentityModel.Abstractions.dll",
+        "lib/net472/Microsoft.IdentityModel.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.IdentityModel.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.IdentityModel.Abstractions.xml",
+        "microsoft.identitymodel.abstractions.6.18.0.nupkg.sha512",
+        "microsoft.identitymodel.abstractions.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.1": [
+      "AzureMapsControl.Components >= 1.12.0",
+      "Darnton.Blazor.DeviceInterop >= 0.1.2",
+      "Microsoft.Identity.Client >= 4.46.1"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\ble24\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\ble24\\Documents\\Projects\\junction2022\\Mayflower\\Mayflower.csproj",
+      "projectName": "Mayflower",
+      "projectPath": "C:\\Users\\ble24\\Documents\\Projects\\junction2022\\Mayflower\\Mayflower.csproj",
+      "packagesPath": "C:\\Users\\ble24\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ble24\\Documents\\Projects\\junction2022\\Mayflower\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\ble24\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
+        "dependencies": {
+          "AzureMapsControl.Components": {
+            "target": "Package",
+            "version": "[1.12.0, )"
+          },
+          "Darnton.Blazor.DeviceInterop": {
+            "target": "Package",
+            "version": "[0.1.2, )"
+          },
+          "Microsoft.Identity.Client": {
+            "target": "Package",
+            "version": "[4.46.1, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

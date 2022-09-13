@@ -1,0 +1,4 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="_content/AzureMapsControl.Components" Path="C:\Users\ble24\.nuget\packages\azuremapscontrol.components\1.12.0\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Darnton.Blazor.DeviceInterop" Path="C:\Users\ble24\.nuget\packages\darnton.blazor.deviceinterop\0.1.2\build\..\staticwebassets\" />
+</StaticWebAssets>

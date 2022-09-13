@@ -1,0 +1,319 @@
+﻿@page "/"
+@namespace Mayflower.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mayflower</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Ak6D72Y-hfnjUQ4GlPQlg-oFGlAZhkp5tLAfRZu7VO28wvEY8gixYCTTqrag1Xo-'></script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
+        import { get, getDatabase, ref, set, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-database.js";
+        import { getStorage, uploadBytesResumable, getDownloadURL, ref as sRef } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "",
+            authDomain: "",
+            databaseURL: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        const db = getDatabase(app);
+        const markersRef = ref(db, '/markers/');
+
+        window.sRef = sRef;
+        window.markersRef = markersRef;
+        window.push = push;
+        window.get = get;
+        window.onChildAdded = onChildAdded;
+        window.storage = getStorage(app);
+        window.ubr = uploadBytesResumable;
+        window.gdu = getDownloadURL;
+    </script>
+
+    <script type='text/javascript'>
+        var map = null;
+        var infoboxCreated = null;
+        var polygons = [];
+        var markers = {};
+        var file = null;
+
+        var infoBoxToAdd = {
+            "title": null,
+            "count": null,
+            "image": null,
+            "longitude": null,
+            "latitude": null,
+            "username": null
+        };
+        var infoBoxToShow = {
+            "title": null,
+            "count": null,
+            "image": null,
+            "longitude": null,
+            "latitude": null,
+            "username": null
+        };
+
+        function readMarkers() {
+            window.get(window.markersRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    markers = snapshot.val();
+                    // draw markers
+                    for (var key in markers) {
+                        createPin('orange',
+                            new Microsoft.Maps.Location(
+                                markers[key].latitude,
+                                markers[key].longitude
+                            ), key);
+                    }
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+
+            window.onChildAdded(window.markersRef, 
+                (data) => {
+                    markers[data.key] = data.val();
+                    if (map != null) {
+                        const location = new Microsoft.Maps.Location(data.val().latitude, data.val().longitude);
+                        createPin('red', location, data.key);
+                    }
+                }
+            );
+        }
+
+        async function parseJSON() {
+            const response = await fetch("assets/data.json");
+            const jsonObj = await response.json();
+
+            for (var key in jsonObj) {
+                const arr = jsonObj[key];
+                let polygon = [];
+                for (var i = 0; i < arr.length; i++) {
+                    let point = arr[i];
+                    let location = new Microsoft.Maps.Location(point[1]-0.4515, point[0]);
+                    polygon.push(location);
+                }
+                polygons.push(polygon);
+            }
+            //console.log(json);
+        }
+        async function windowOnLoad() {
+            document.body.style.backgroundColor = "#000000";
+
+            await parseJSON();
+
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+
+            var w = "width:" + (width * 0.5).toString() + "px";
+            var h = "height:" + (width * 0.5).toString() + "px";
+            document.getElementById('loading').setAttribute("style", w + ";" + h + ";" + "display: block; margin-left: auto; margin-right: auto;");
+
+            loadMapScenario();
+            setTimeout(function(){
+                document.getElementById("loadingPopup").style.display = "none";
+                document.getElementById("myMap").style.display = "block";
+            }, 2000);
+        }
+
+        function loadMapScenario() {
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+
+            var w = "width:" + width.toString() + "px";
+            var h = "height:" + height.toString() + "px";
+
+            document.getElementById('myMap').setAttribute("style", w+";"+h+";");
+            map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                center: new Microsoft.Maps.Location(37.51024272873559, 126.97668746768724),
+                allowHidingLabelsOfRoad: true,
+                mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+                zoom: 10,
+                showLocateMeButton: true,
+                enableClickableLogo: false
+            }
+            );
+            map.setView({ labelOverlay: Microsoft.Maps.LabelOverlay.hidden });
+
+            //map binding
+            Microsoft.Maps.Events.addHandler(map, 'click',
+                function (e) {
+                    handleClick(e);
+                }
+            );
+
+            // draw polygons
+            for (var i = 0; i < polygons.length; i++) {
+                var polygon = new Microsoft.Maps.Polygon(polygons[i], {
+                    fillColor: 'rgba(0, 255, 0, 0.5)',
+                    strokeColor: 'red',
+                    strokeThickness: 2
+                });
+                //Add the polygon to map
+                map.entities.push(polygon);
+            }
+
+            readMarkers();
+
+        }
+
+        //function createInfobox(title, )
+
+        function uploadImgFromInfoBox(){
+            document.getElementById('image-input').click();
+        }
+
+        function createPin(pinColor, location, key) {
+            var pin = new Microsoft.Maps.Pushpin(location,
+                {
+                    color: pinColor
+                }
+            );
+            Microsoft.Maps.Events.addHandler(pin, 'click', 
+                function () {
+                    const marker = markers[key];
+                    console.log(marker);
+                    const location = new Microsoft.Maps.Location(
+                        marker.latitude,
+                        marker.longitude
+                    );
+
+                    var infobox = new Microsoft.Maps.Infobox(location, {
+                        title: marker.title + " - By. " + marker.username,
+                        showCloseButton: true
+                    });
+
+                    infobox.setMap(map);
+                }
+            );
+            map.entities.push(pin);
+
+            closeInfoBox();
+        }
+
+        function clearInfoBoxToAdd() {
+            infoBoxToAdd = {
+                "title": null,
+                "count": null,
+                "image": null,
+                "longitude": null,
+                "latitude": null,
+                "username": null
+            };
+        }
+
+        function showInfoBox() {
+
+        }
+
+        function uploadImgFromInfoBox() {
+            var fileUpload = document.getElementById("image-input");
+            fileUpload.addEventListener('change', function (evt) {
+                file = evt.target.files[0]; // upload the first file only
+                console.log(file);
+            })
+            document.getElementById("image-input").click();
+        }
+
+        function generateInfoBox() {
+            const filename = file.name.split(".")[0];
+            const storageRef = window.sRef(window.storage, '/scenes/' + filename);
+            const uploadTask = window.ubr(storageRef, file);
+            window.gdu(uploadTask.snapshot.ref).then((url) => {
+                // get infobox info to add
+                infoBoxToAdd["title"] = document.getElementById("infoboxTitle").value;
+                infoBoxToAdd["image"] = url;
+                infoBoxToAdd["longitude"] = infoboxCreated.getLocation().longitude;
+                infoBoxToAdd["latitude"] = infoboxCreated.getLocation().latitude;
+                infoBoxToAdd["username"] = document.getElementById("infoboxUser").value;;
+
+                const pin_key = window.push(window.markersRef, infoBoxToAdd).key;
+
+                clearInfoBoxToAdd();
+              //console.log(url);
+            });
+
+            //const file = document.getElementById("image-input").value;
+            //const filename = document.getElementById("image-input").files[0].name;
+            //console.log(filename);
+            
+            //const uploadTask = window.ubr(storageRef, file);
+            //window.gdu(uploadTask.snapshot.ref).then((url) => {
+              //  console.log(url);
+           // });
+
+            
+        }
+
+        function closeInfoBox() {
+            if (infoboxCreated != null) {
+                infoboxCreated.setMap(null);
+                infoboxCreated = null;
+            }
+        }
+
+        function handleClick(e) {
+            if (infoboxCreated != null) {
+                closeInfoBox();
+            }
+
+            var point = new Microsoft.Maps.Point(e.pageX, e.pageY);
+            var clickedLocation = map.tryPixelToLocation(point, Microsoft.Maps.PixelReference.control);
+            
+            var infoboxTemplate = '<div id="infoboxText" style="background-color:White; border-style:solid; border-width:medium; border-color:DarkOrange; min-height:70px; width: 100px;">' +
+                '<input type="text" placeholder="<title>" id="infoboxTitle" style="top: 10px; left: 10px; margin-bottom: 10px; bottom: 20px; width: 90px;display: block;margin-left: auto;margin-right: auto;"></input>' +
+                '<input type="text" placeholder="<username>" id="infoboxUser" style="top: 10px; left: 10px; margin-bottom: 10px; bottom: 20px; width: 80px;display: block;margin-left: auto;margin-right: auto;"></input>' +
+                '<button style="display: block; margin-bottom: 10px; margin-left: auto; margin-right: auto; bottom: 20px">👍(0)</button>' +
+                '<button onclick="uploadImgFromInfoBox()" style="display: block; margin-bottom: 10px; margin-left: auto; margin-right: auto;">Upload</button>' +
+                '<button onclick="generateInfoBox()" style="display: block; margin-bottom: 10px; margin-left: auto; margin-right: auto;">Save</button>' +
+                '<button onclick="closeInfoBox()" name="new" style="display: block;margin-left: auto;margin-right: auto;">Close</button>' +
+                '</div>';
+          
+            
+            infoboxCreated = new Microsoft.Maps.Infobox(
+                clickedLocation, 
+                { 
+                    htmlContent: infoboxTemplate
+                }
+            );
+
+            infoboxCreated.setMap(map);
+        }
+
+
+    </script>
+</head>
+
+<body onload='windowOnLoad();'>
+    <div id="loadingPopup" class="center-screen">
+        <h1 style="color:white">Loading...</h1>
+        <img id="loading" src="https://c.tenor.com/ZAw_hz_GBBsAAAAd/rain.gif" />
+    </div>
+        
+    <div style="display:none;" class="animate-bottom" id='myMap'></div>
+    <input type="file" id="image-input" capture="camera" accept ="image/jpeg, image/png, image/jpg" hidden>
+    
+</body>
+</html>
