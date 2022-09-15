@@ -36,7 +36,7 @@ Mayflower is a smart alert system for heavy rainfall and flood risks in Seoul. O
 
 
 
-### Note: Read doc folder for dev notes.
+### Note: Go to ML folder for ML dev notes.
 
 
 
